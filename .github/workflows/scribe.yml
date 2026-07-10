@@ -4,7 +4,7 @@ name: Boreal Wx AI Scribe
 on:
   schedule:
     - cron: '0 10,16,21 * * *'
-  workflow_dispatch: # Allows manual testing clicks!
+  workflow_dispatch: 
 
 permissions:
   contents: read
@@ -23,23 +23,25 @@ jobs:
           cat << 'EOF' > scribe.py
           import urllib.request, json, os
 
-          # The Ultimate Multi-Weather Prompt
-          prompt = """You are the Boreal Wx Scribe—an authentic, warm, witty Canadian mentor.
-          Generate a daily Canadian newcomer guide for today. You must provide 4 distinct variations based on what the user's local weather conditions look like.
+          # The Upgraded Multi-Weather Escape Prompt
+          prompt = """You are the Boreal Wx Scribe—an authentic, warm, witty Canadian mentor and tactical travel guide.
+          Generate a daily Canadian newcomer guide and Escape Plan travel manifest for today. You must provide 4 distinct variations based on local weather conditions.
           
-          For each weather condition, provide:
-          Line 1: A warm national greeting using light Canadian slang.
-          Line 2: A practical newcomer house, car, or lifestyle tip specific to that weather.
-          Line 3: A positive Canadian Pride fact (history, invention, or sports achievement).
+          For each weather condition (Clear, Rain, Snow, Heat), provide:
+          1. "headline": A warm national greeting using light Canadian slang.
+          2. "lifestyle": A practical newcomer lifestyle tip specific to that weather.
+          3. "wisdom": A positive Canadian Pride fact.
+          4. "escape_manifest": A strict, tactical trunk-packing list or vehicle warning for highway travel in this specific weather.
+          5. "road_trip_slang": A charming explanation of Canadian road trip culture, long weekends, or travel slang (e.g., 'klicks', 'Loonies', 'May Two-Four', 'Double-Double').
 
           Return ONLY a single valid JSON object matching this exact structure:
           {
-            "clear": {"headline": "...", "lifestyle": "...", "wisdom": "..."},
-            "rain": {"headline": "...", "lifestyle": "...", "wisdom": "..."},
-            "snow": {"headline": "...", "lifestyle": "...", "wisdom": "..."},
-            "heat": {"headline": "...", "lifestyle": "...", "wisdom": "..."}
+            "clear": {"headline": "...", "lifestyle": "...", "wisdom": "...", "escape_manifest": "...", "road_trip_slang": "..."},
+            "rain": {"headline": "...", "lifestyle": "...", "wisdom": "...", "escape_manifest": "...", "road_trip_slang": "..."},
+            "snow": {"headline": "...", "lifestyle": "...", "wisdom": "...", "escape_manifest": "...", "road_trip_slang": "..."},
+            "heat": {"headline": "...", "lifestyle": "...", "wisdom": "...", "escape_manifest": "...", "road_trip_slang": "..."}
           }
-          Do not include any markdown styling, conversational text, or code blocks."""
+          Do not include any markdown styling or conversational text."""
 
           # Request AI Generation
           api_key = os.environ.get('GEMINI_API_KEY')
@@ -54,14 +56,12 @@ jobs:
               ai_text = res['candidates'][0]['content']['parts'][0]['text']
               ai_text = ai_text.replace('```json', '').replace('```', '').strip()
               
-              # Validate JSON structure before saving
               json.loads(ai_text)
               
-              # Save to public cache folder
               os.makedirs('public', exist_ok=True)
               with open('public/canadian_wisdom.json', 'w') as f:
                   f.write(ai_text)
-              print("Successfully generated Multi-Weather AI Matrix!")
+              print("Successfully generated Upgraded Escape Matrix!")
           except Exception as e:
               print(f"Error: {e}")
               exit(1)
