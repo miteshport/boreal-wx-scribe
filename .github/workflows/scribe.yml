@@ -1,0 +1,82 @@
+name: Boreal Wx AI Scribe
+
+# Wakes up at 6:00 AM, 12:00 PM, and 5:00 PM EDT
+on:
+  schedule:
+    - cron: '0 10,16,21 * * *'
+  workflow_dispatch: # Allows manual testing clicks!
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Create AI Script
+        run: |
+          cat << 'EOF' > scribe.py
+          import urllib.request, json, os
+
+          # The Ultimate Multi-Weather Prompt
+          prompt = """You are the Boreal Wx Scribe—an authentic, warm, witty Canadian mentor.
+          Generate a daily Canadian newcomer guide for today. You must provide 4 distinct variations based on what the user's local weather conditions look like.
+          
+          For each weather condition, provide:
+          Line 1: A warm national greeting using light Canadian slang.
+          Line 2: A practical newcomer house, car, or lifestyle tip specific to that weather.
+          Line 3: A positive Canadian Pride fact (history, invention, or sports achievement).
+
+          Return ONLY a single valid JSON object matching this exact structure:
+          {
+            "clear": {"headline": "...", "lifestyle": "...", "wisdom": "..."},
+            "rain": {"headline": "...", "lifestyle": "...", "wisdom": "..."},
+            "snow": {"headline": "...", "lifestyle": "...", "wisdom": "..."},
+            "heat": {"headline": "...", "lifestyle": "...", "wisdom": "..."}
+          }
+          Do not include any markdown styling, conversational text, or code blocks."""
+
+          # Request AI Generation
+          api_key = os.environ.get('GEMINI_API_KEY')
+          g_url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}'
+          payload = {'contents': [{'parts': [{'text': prompt}]}]}
+          data = json.dumps(payload).encode('utf-8')
+          req = urllib.request.Request(g_url, data=data, headers={'Content-Type': 'application/json'})
+
+          try:
+              response = urllib.request.urlopen(req)
+              res = json.loads(response.read())
+              ai_text = res['candidates'][0]['content']['parts'][0]['text']
+              ai_text = ai_text.replace('```json', '').replace('```', '').strip()
+              
+              # Validate JSON structure before saving
+              json.loads(ai_text)
+              
+              # Save to public cache folder
+              os.makedirs('public', exist_ok=True)
+              with open('public/canadian_wisdom.json', 'w') as f:
+                  f.write(ai_text)
+              print("Successfully generated Multi-Weather AI Matrix!")
+          except Exception as e:
+              print(f"Error: {e}")
+              exit(1)
+          EOF
+
+      - name: Execute AI Scribe
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scribe.py
+
+      - name: Upload GitHub Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './public'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
