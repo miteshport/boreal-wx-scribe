@@ -1,9 +1,9 @@
-name: Boreal Wx AI Scribe
+name: Boreal Wx Master AI Matrix
 
-# Wakes up at 6:00 AM, 12:00 PM, and 5:00 PM EDT
+# 4-Strike Daily Schedule (Times in UTC to hit 6:30 AM, 11:30 AM, 3:30 PM, 8:30 PM EDT)
 on:
   schedule:
-    - cron: '0 10,16,21 * * *'
+    - cron: '30 10,15,19,0 * * *'
   workflow_dispatch: 
 
 permissions:
@@ -12,40 +12,47 @@ permissions:
   id-token: write
 
 jobs:
-  build-and-deploy:
+  generate-boreal-matrix:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Create AI Script
+      - name: Build the Python Master Scribe
         run: |
           cat << 'EOF' > scribe.py
-          import urllib.request, json, os
+          import urllib.request, json, os, datetime
 
-          # The Upgraded Multi-Weather Escape Prompt
-          prompt = """You are the Boreal Wx Scribe—an authentic, warm, witty Canadian mentor and tactical travel guide.
-          Generate a daily Canadian newcomer guide and Escape Plan travel manifest for today. You must provide 4 distinct variations based on local weather conditions.
-          
-          For each weather condition (Clear, Rain, Snow, Heat), provide:
-          1. "headline": A warm national greeting using light Canadian slang.
-          2. "lifestyle": A practical newcomer lifestyle tip specific to that weather.
-          3. "wisdom": A positive Canadian Pride fact.
-          4. "escape_manifest": A strict, tactical trunk-packing list or vehicle warning for highway travel in this specific weather.
-          5. "road_trip_slang": A charming explanation of Canadian road trip culture, long weekends, or travel slang (e.g., 'klicks', 'Loonies', 'May Two-Four', 'Double-Double').
+          today = datetime.datetime.now().strftime("%B %d, %Y")
 
-          Return ONLY a single valid JSON object matching this exact structure:
-          {
-            "clear": {"headline": "...", "lifestyle": "...", "wisdom": "...", "escape_manifest": "...", "road_trip_slang": "..."},
-            "rain": {"headline": "...", "lifestyle": "...", "wisdom": "...", "escape_manifest": "...", "road_trip_slang": "..."},
-            "snow": {"headline": "...", "lifestyle": "...", "wisdom": "...", "escape_manifest": "...", "road_trip_slang": "..."},
-            "heat": {"headline": "...", "lifestyle": "...", "wisdom": "...", "escape_manifest": "...", "road_trip_slang": "..."}
-          }
-          Do not include any markdown styling or conversational text."""
+          prompt = f"""You are the Boreal Wx AI—an elite Canadian meteorological and cultural intelligence engine.
+          Generate today's ({today}) hyper-localized survival guides, travel manifests, and notifications.
 
-          # Request AI Generation
+          You must generate a strictly valid JSON object covering 5 Canadian climate regions: 
+          "bc_coast", "prairies", "great_lakes", "east_coast", "the_north".
+
+          For EACH region, provide 4 distinct timeframes: "0630", "1100", "1530", "2030".
+
+          For EACH timeframe, output this exact structure:
+          {{
+            "condition": "A realistic Canadian weather hazard or state for this region (e.g., Freezing Drizzle, Wildfire Smoke, Extreme Humidex, Clear Starry Night).",
+            "notification": "A short, punchy push notification (max 120 chars) tailored to this specific timeframe and condition.",
+            "survival_guide": "A practical newcomer lifestyle tip.",
+            "escape_manifest": "A strict, tactical trunk-packing list or highway warning.",
+            "slang_hud": "A charming explanation of Canadian slang (e.g., 'Toque', 'Double-Double', 'Klicks')."
+          }}
+
+          At the root of the JSON object, include a "cultural_pulse" object containing:
+          {{
+            "historical_fact": "A positive Canadian history fact that happened on this exact date.",
+            "holiday_alert": "An upcoming Canadian public holiday and a relevant travel tip."
+          }}
+
+          Return ONLY raw JSON. No markdown formatting, no backticks, no introductory text."""
+
           api_key = os.environ.get('GEMINI_API_KEY')
-          g_url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key={api_key}'
+          # Upgrading to 1.5-Flash for complex nested JSON generation
+          g_url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}'
           payload = {'contents': [{'parts': [{'text': prompt}]}]}
           data = json.dumps(payload).encode('utf-8')
           req = urllib.request.Request(g_url, data=data, headers={'Content-Type': 'application/json'})
@@ -54,29 +61,32 @@ jobs:
               response = urllib.request.urlopen(req)
               res = json.loads(response.read())
               ai_text = res['candidates'][0]['content']['parts'][0]['text']
+              
+              # Strip Markdown if AI hallucinated it
               ai_text = ai_text.replace('```json', '').replace('```', '').strip()
               
-              json.loads(ai_text)
+              # Rigid Validation Gate - Will crash script if JSON is invalid, saving the old file
+              json_data = json.loads(ai_text)
               
               os.makedirs('public', exist_ok=True)
-              with open('public/canadian_wisdom.json', 'w') as f:
-                  f.write(ai_text)
-              print("Successfully generated Upgraded Escape Matrix!")
+              with open('public/boreal_matrix.json', 'w') as f:
+                  json.dump(json_data, f)
+              print("Phase 1 Complete: Multi-Regional Matrix successfully generated and validated!")
           except Exception as e:
-              print(f"Error: {e}")
+              print(f"CRITICAL FAILURE: {e}")
               exit(1)
           EOF
 
-      - name: Execute AI Scribe
+      - name: Execute Matrix Generation
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python scribe.py
 
-      - name: Upload GitHub Pages Artifact
+      - name: Upload Cloud Payload
         uses: actions/upload-pages-artifact@v3
         with:
           path: './public'
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy Payload to Edge
         id: deployment
         uses: actions/deploy-pages@v4
