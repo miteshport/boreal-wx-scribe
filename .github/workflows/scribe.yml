@@ -50,6 +50,7 @@ jobs:
 
           Return ONLY raw JSON. No markdown formatting, no backticks, no introductory text."""
 
+          # Request AI Generation
           api_key = os.environ.get('GEMINI_API_KEY')
           # Upgrading to 1.5-Flash for complex nested JSON generation
           g_url = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}'
