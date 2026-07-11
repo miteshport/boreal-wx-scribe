@@ -21,12 +21,17 @@ jobs:
       - name: Build the Python Master Scribe
         run: |
           cat << 'EOF' > scribe.py
-          import urllib.request, urllib.error, json, os, datetime
+          import urllib.request, urllib.error, json, os, datetime, uuid
 
           today = datetime.datetime.now().strftime("%B %d, %Y")
+          seed = str(uuid.uuid4())
 
           prompt = f"""You are the Boreal Wx AI—an elite Canadian meteorological and cultural intelligence engine.
           Generate today's ({today}) hyper-localized survival guides, travel manifests, and notifications.
+
+          [ZERO REPEAT PROTOCOL ACTIVE]
+          Seed Entropy: {seed}
+          CRITICAL INSTRUCTION: You MUST generate 100% unique Canadian newcomer tips and slang that have NEVER been generated before. Do not recycle standard answers. Vary the tone, situations, and regions significantly.
 
           You must generate a strictly valid JSON object covering 5 Canadian climate regions: 
           "bc_coast", "prairies", "great_lakes", "east_coast", "the_north".
