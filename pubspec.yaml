@@ -1,0 +1,101 @@
+name: weather_sync_ca
+description: >-
+  A premium Nothing OS-inspired, zero-maintenance seasonal weather
+  and lifestyle utility application for the Canadian market.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  # Relaxing the lower bound to 3.0.0 to prevent Dart SDK version solving failures
+  # on newer Flutter builds (like 3.44.x) that might ship with mismatched Dart bands.
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_bloc: any
+  equatable: any
+
+  # Dependency Injection
+  get_it: any
+
+  # Networking
+  dio: any
+
+  # GPS & Location (geolocator powers the live weather coordinate bridge)
+  geolocator: any
+  geocoding: any
+
+  # Firebase Backend 
+  # Note: Stripping strict version locks to allow pub to resolve the BoM natively
+  firebase_core: any
+  firebase_crashlytics: any
+  firebase_messaging: any
+  cloud_firestore: any
+
+  # Monetization
+  google_mobile_ads: any
+
+  # UI / Typography
+  google_fonts: any
+  flutter_svg: any
+  flutter_markdown: any
+
+  # Local Persistence / Cache
+  shared_preferences: any
+
+  # Data Parsing
+  xml: any
+  intl: any
+
+  # Navigation & Utilities
+  url_launcher: any
+
+  # Fluid Transitions — OpenContainer morph animations
+  animations: any
+
+  # Notifications & Scheduling
+  flutter_local_notifications: any
+  timezone: any
+  home_widget: ^0.9.3
+  http: ^1.6.0
+  flutter_staggered_grid_view: ^0.7.0
+  workmanager: ^0.9.0+3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  bloc_test: any
+  mocktail: any
+  
+  # Removed flutter_lints strict version to prevent SDK resolution lockouts
+  flutter_lints: any
+  flutter_launcher_icons: ^0.14.4
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#0A0A0A"
+  adaptive_icon_foreground: "assets/icons/app_icon_foreground.png"
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/articles/snow_bylaw_guide.md
+    - assets/articles/salt_distribution_guide.md
+    - assets/articles/cold_survival_guide.md
+    - assets/icons/ic_snow.svg
+    - assets/icons/ic_sun.svg
+    - assets/icons/ic_cloud.svg
+    - assets/icons/ic_wind.svg
+    - assets/icons/ic_shovel.svg
+    - assets/icons/ic_plow.svg
+    - assets/icons/ic_thermometer.svg
+    - assets/icons/ic_golden_hour.svg
+    - assets/icons/ic_calendar.svg
+    - assets/icons/ic_location.svg

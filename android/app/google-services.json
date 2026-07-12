@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1023978571987",
+    "project_id": "weather-sync-ca",
+    "storage_bucket": "weather-sync-ca.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023978571987:android:c74f696bd1b31c4274ec26",
+        "android_client_info": {
+          "package_name": "com.example.weather_sync_ca"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqgoQHdw4jOCTC3YbdvhzPB657JdSPMOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

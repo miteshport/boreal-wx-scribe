@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0A0A"
+    android:padding="12dp">
+
+    <!-- Tactical Crosshairs (Visible Tiers 4+) -->
+    <TextView
+        android:id="@+id/crosshair_tl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:textColor="#00F0FF"
+        android:textSize="10sp"
+        android:layout_gravity="top|start"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/crosshair_tr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:textColor="#00F0FF"
+        android:textSize="10sp"
+        android:layout_gravity="top|end"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/crosshair_bl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:textColor="#00F0FF"
+        android:textSize="10sp"
+        android:layout_gravity="bottom|start"
+        android:visibility="gone" />
+    <TextView
+        android:id="@+id/crosshair_br"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:textColor="#00F0FF"
+        android:textSize="10sp"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone" />
+
+    <!-- TIER 1: Essential Micro Pill (2x1) -->
+    <LinearLayout
+        android:id="@+id/tier1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/t1_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:textColor="#FFFFFF"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-light"
+            android:includeFontPadding="false"
+            android:maxLines="1" />
+        <TextView
+            android:id="@+id/t1_cond"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SYNCING..."
+            android:textColor="#D4FF00"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <!-- TIER 2: Pocket Gauge (2x2) -->
+    <RelativeLayout
+        android:id="@+id/tier2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/t2_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:textColor="#FFFFFF"
+            android:textSize="56sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-light"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:gravity="end">
+            <TextView
+                android:id="@+id/t2_cond"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SYNCING..."
+                android:textColor="#D4FF00"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/t2_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OUTLOOK: SYNCING..."
+                android:textColor="#8899AA"
+                android:textSize="10sp"
+                android:layout_marginTop="2dp" />
+            <TextView
+                android:id="@+id/t2_trend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TREND: STABLE"
+                android:textColor="#00F0FF"
+                android:textSize="10sp"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- TIER 3: Tactical Strip (4x1) -->
+    <LinearLayout
+        android:id="@+id/tier3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+        
+        <TextView
+            android:id="@+id/t3_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="--"
+            android:textColor="#FFFFFF"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed-light"
+            android:includeFontPadding="false"
+            android:maxLines="1" />
+            
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+            <TextView
+                android:id="@+id/t3_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OUTLOOK: SYNCING..."
+                android:textColor="#8899AA"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/t3_cond"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SYNCING..."
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        
+        <!-- 4-hour trend string representation -->
+        <TextView
+            android:id="@+id/t3_hourly"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TREND: STABLE"
+            android:textColor="#00F0FF"
+            android:textSize="12sp"
+            android:textAlignment="viewEnd"
+            android:gravity="end" />
+            
+    </LinearLayout>
+
+    <!-- TIER 4: Standard Banner (4x2) -->
+    <LinearLayout
+        android:id="@+id/tier4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:visibility="gone">
+        
+        <!-- Left block -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/boreal_inukshuk"
+                android:background="#0A0A0A"
+                android:padding="4dp"
+                android:layout_marginBottom="4dp"
+                android:id="@+id/t4_icon" />
+            <TextView
+                android:id="@+id/t4_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textColor="#FFFFFF"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed-light"
+                android:includeFontPadding="false"
+                android:maxLines="1" />
+            <TextView
+                android:id="@+id/t4_loc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OUTLOOK: SYNCING..."
+                android:textColor="#8899AA"
+                android:textSize="12sp" />
+            <TextView
+                android:id="@+id/t4_cond"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SYNCING..."
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/t4_slang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🍁 WEATHER SYNC: STABLE"
+                android:textColor="#00F0FF"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+        
+        <FrameLayout
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#1A1A1A"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+        
+        <!-- Right Block: 3-Day Outlook -->
+        <LinearLayout
+            android:id="@+id/t4_outlook_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="end">
+            <!-- Populated via RemoteViews dynamically -->
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- TIER 5: Extended Console (4x3) -->
+    <LinearLayout
+        android:id="@+id/tier5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+        
+        <!-- Top Block -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/t5_temp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--"
+                android:textColor="#FFFFFF"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed-light"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:layout_alignParentStart="true" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentEnd="true"
+                android:gravity="end"
+                android:layout_centerVertical="true">
+                <TextView
+                    android:id="@+id/t5_cond"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SYNCING..."
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/t5_loc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OUTLOOK: SYNCING..."
+                    android:textColor="#8899AA"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </RelativeLayout>
+        
+        <!-- Divider -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1A1A1A"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp" />
+
+        <!-- T5 Lifestyle Strip -->
+        <TextView
+            android:id="@+id/t5_lifestyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TACTICAL OUTLOOK: STABLE"
+            android:textColor="#D4FF00"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="6dp" />
+
+        <!-- Divider -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1A1A1A"
+            android:layout_marginBottom="6dp" />
+            
+        <!-- Hourly Strip -->
+        <LinearLayout
+            android:id="@+id/t5_hourly_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="6">
+            <!-- Populated via RemoteViews -->
+        </LinearLayout>
+        
+        <!-- Divider -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1A1A1A"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp" />
+            
+        <!-- Weekly Strip -->
+        <LinearLayout
+            android:id="@+id/t5_weekly_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- Populated via RemoteViews -->
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- TIER 6: Command Deck (4x4+) -->
+    <LinearLayout
+        android:id="@+id/tier6"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
+        
+        <!-- Top Half -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- Inukshuk image -->
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/boreal_inukshuk"
+                android:background="#0A0A0A"
+                android:padding="6dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:id="@+id/t6_icon" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toEndOf="@id/t6_icon"
+                android:layout_centerVertical="true">
+                <TextView
+                    android:id="@+id/t6_temp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--"
+                    android:textColor="#FFFFFF"
+                    android:textSize="56sp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed-light"
+                    android:includeFontPadding="false"
+                    android:maxLines="1" />
+                <TextView
+                    android:id="@+id/t6_loc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="OUTLOOK: SYNCING..."
+                    android:textColor="#8899AA"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:gravity="end">
+                <TextView
+                    android:id="@+id/t6_cond"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SYNCING..."
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/t6_badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AQHI: AWAITING PULSE"
+                    android:textColor="#0A0A0A"
+                    android:background="#00F0FF"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!-- Divider -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1A1A1A"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+            
+        <!-- Hourly Strip -->
+        <LinearLayout
+            android:id="@+id/t6_hourly_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="6">
+        </LinearLayout>
+        
+        <!-- Divider -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#1A1A1A"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+            
+        <!-- Weekly Strip -->
+        <LinearLayout
+            android:id="@+id/t6_weekly_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+        </LinearLayout>
+        
+        <!-- T6 Wisdom Advisory Box -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#2A2A2A"
+            android:padding="1dp"
+            android:layout_marginTop="8dp">
+            
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#111111"
+                android:padding="12dp">
+                <TextView
+                    android:id="@+id/t6_wisdom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TACTICAL OUTLOOK: STABLE"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:lineSpacingExtra="4dp" />
+            </FrameLayout>
+            
+            <!-- Crosshairs (+ at corners) -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#00F0FF" android:textSize="10sp" android:layout_gravity="top|start" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#00F0FF" android:textSize="10sp" android:layout_gravity="top|end" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#00F0FF" android:textSize="10sp" android:layout_gravity="bottom|start" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+" android:textColor="#00F0FF" android:textSize="10sp" android:layout_gravity="bottom|end" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

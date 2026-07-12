@@ -36,14 +36,14 @@ jobs:
           You must generate a strictly valid JSON object covering 5 Canadian climate regions: 
           "bc_coast", "prairies", "great_lakes", "east_coast", "the_north".
 
-          For EACH region, provide 4 distinct timeframes: "0630", "1100", "1530", "2030".
+          For EACH region, provide 5 distinct weather categories: "clear", "cryo", "storm", "heat", "smoke".
 
-          For EACH timeframe, output this exact structure:
+          For EACH category, output this exact structure:
           {{
-            "condition": "A realistic Canadian weather hazard or state for this region (e.g., Freezing Drizzle, Wildfire Smoke, Extreme Humidex, Clear Starry Night).",
-            "notification": "A short, punchy push notification (max 120 chars) tailored to this specific timeframe and condition.",
-            "survival_guide": "A practical newcomer lifestyle tip.",
-            "escape_manifest": "A strict, tactical trunk-packing list or highway warning.",
+            "condition": "A realistic specific Canadian weather state for this category (e.g., Freezing Drizzle for cryo, Wildfire Smoke for smoke, Extreme Humidex for heat).",
+            "notification": "A short, punchy push notification (max 120 chars) tailored to this specific condition.",
+            "survival_guide": "A practical newcomer lifestyle or neighborhood tip for this weather.",
+            "escape_manifest": "A strict, tactical long-distance highway or road-trip warning. Make this distinctly for travel/weekends.",
             "slang_hud": "A charming explanation of Canadian slang (e.g., 'Toque', 'Double-Double', 'Klicks')."
           }}
 
